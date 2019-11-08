@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TryWebApi.Data;
 
 namespace TryWebApi.Migrations
 {
     [DbContext(typeof(TryWebApiContext))]
-    partial class TryWebApiContextModelSnapshot : ModelSnapshot
+    [Migration("20191108092034_NewIdentityInService")]
+    partial class NewIdentityInService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,27 +31,18 @@ namespace TryWebApi.Migrations
 
                     b.Property<string>("ServiceName");
 
+                    b.Property<int?>("UsersID");
+
                     b.HasKey("ServiceID");
 
-                    b.ToTable("Service");
-                });
+                    b.HasIndex("UsersID");
 
-            modelBuilder.Entity("TryWebApi.Models.ServiceAssignment", b =>
-                {
-                    b.Property<int>("UserID");
-
-                    b.Property<int>("ServiceID");
-
-                    b.HasKey("UserID", "ServiceID");
-
-                    b.HasIndex("ServiceID");
-
-                    b.ToTable("ServiceAssignment");
+                    b.ToTable("GetServices");
                 });
 
             modelBuilder.Entity("TryWebApi.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -59,22 +52,16 @@ namespace TryWebApi.Migrations
 
                     b.Property<string>("UserName");
 
-                    b.HasKey("UserID");
+                    b.HasKey("ID");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TryWebApi.Models.ServiceAssignment", b =>
+            modelBuilder.Entity("TryWebApi.Models.Service", b =>
                 {
-                    b.HasOne("TryWebApi.Models.Service", "Service")
-                        .WithMany("ServiceAssignment")
-                        .HasForeignKey("ServiceID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TryWebApi.Models.User", "User")
-                        .WithMany("ServiceAssignment")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("TryWebApi.Models.User", "Users")
+                        .WithMany("Services")
+                        .HasForeignKey("UsersID");
                 });
 #pragma warning restore 612, 618
         }

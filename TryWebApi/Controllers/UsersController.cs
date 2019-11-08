@@ -21,7 +21,7 @@ namespace TryWebApi.Controllers
         {
             _context = context;
 
-            if(_context.Users.Count() == 0 || _context.GetServices.Count() == 0)
+            if(_context.Users.Count() == 0 || _context.GetServices.Count() == 0 || _context.ServiceAssignments.Count() == 0)
             {
                 //IEnumerable<User> users = new User[]
                 //{
@@ -74,7 +74,7 @@ namespace TryWebApi.Controllers
         [HttpPut("{id}")]
         public void Put(int id, User updatedUser)
         { 
-            if(id != updatedUser.ID)
+            if(id != updatedUser.UserID)
             {
                 BadRequest();
             }

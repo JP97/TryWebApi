@@ -11,6 +11,6 @@ namespace TryWebApi.Models
         public string ServiceName { get; set; }
         public double Cost { get; set; }
 
-        public User Users { get; set; }
+        public ICollection<ServiceAssignment> ServiceAssignment { get; set; }
     }
 }

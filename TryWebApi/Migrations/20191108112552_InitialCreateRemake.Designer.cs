@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TryWebApi.Data;
 
 namespace TryWebApi.Migrations
 {
     [DbContext(typeof(TryWebApiContext))]
-    partial class TryWebApiContextModelSnapshot : ModelSnapshot
+    [Migration("20191108112552_InitialCreateRemake")]
+    partial class InitialCreateRemake
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
