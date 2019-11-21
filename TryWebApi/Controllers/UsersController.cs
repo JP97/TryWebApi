@@ -8,6 +8,7 @@ using TryWebApi.Data;
 using TryWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using TryWebApi.Models.ViewModels;
 
 namespace TryWebApi.Controllers
 {
@@ -23,15 +24,6 @@ namespace TryWebApi.Controllers
 
             if(_context.Users.Count() == 0 || _context.GetServices.Count() == 0 || _context.ServiceAssignments.Count() == 0)
             {
-                //IEnumerable<User> users = new User[]
-                //{
-                //new User{UserName="Bob",Email="bob@dot.com",JoinDate=DateTime.Now, ID=1},
-                //new User{UserName="John",Email="john@dot.com",JoinDate=DateTime.Now, ID=2},
-                //new User{UserName="Jim",Email="Jim@dot.com",JoinDate=DateTime.Now, ID=3},
-                //new User{UserName="Gurlie",Email="gurlie@dot.com",JoinDate=DateTime.Now, ID=4}
-                //};
-                //_context.AddRange(users);
-                //_context.SaveChanges();
                 DbInitializer.Initialize(_context);
             }
             
@@ -40,17 +32,55 @@ namespace TryWebApi.Controllers
         //Virker i Postman
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<User> Get()
         {
+            //https://docs.microsoft.com/de-de/aspnet/core/data/ef-mvc/read-related-data?view=aspnetcore-2.2#about-explicit-loading
             //put virker kun hvis du har asnotracking med i det lort
-           yield return JsonConvert.SerializeObject(_context.Users.AsNoTracking());
+            List<User> users = _context.Users.Include(i => i.ServiceAssignment)
+                                                .ThenInclude(sa => sa.Service)
+                                                .ToList();
+            //List<UserIndexData> listWithUserData = new List<UserIndexData>();
+
+            //var users = _context.Users;
+
+            //foreach(User u in users)
+            //{
+            //    List<Service> services = new List<Service>();
+            //     UserIndexData userinformation = new UserIndexData();
+            //    userinformation.User = u;
+            //    _context.ServiceAssignments.Where(sa => sa.UserID == u.UserID).Load();
+            //    foreach (ServiceAssignment sa in u.ServiceAssignment)
+            //    {
+            //        services.Add(_context.GetServices.SingleOrDefault(s => s.ServiceID == sa.ServiceID));
+            //    }
+            //    userinformation.Services = services;
+            //    listWithUserData.Add(userinformation);
+            //    //services.Clear();
+            //}
+
+
+            return users;
+        }
+
+        private Service FindService(List<Service> services, int serviceID)
+        {
+            Service serviceToFind = new Service();
+
+            foreach (Service service in services)
+            {
+                if(service.ServiceID == serviceID)
+                {
+                    serviceToFind = service;
+                }
+            }
+            return serviceToFind;
         }
 
         //virker i Postman
         // GET: api/Users/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
+        public User Get(int id)
+        { 
             User userToGet = _context.Users.Find(id);
 
             if(userToGet == null)
@@ -58,7 +88,7 @@ namespace TryWebApi.Controllers
                 NotFound();
             }
 
-            return JsonConvert.SerializeObject(userToGet);
+            return userToGet;
         }
 
         //virker i postman its alive/working

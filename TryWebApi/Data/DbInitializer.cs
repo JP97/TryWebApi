@@ -71,10 +71,7 @@ namespace TryWebApi.Data
                 ServiceID = services.Single(s => s.ServiceName == "MatematikLegFlex").ServiceID,
                 UserID = users.Single(u => u.UserName == "John").UserID
                 },
-                new ServiceAssignment{
-                ServiceID = services.Single(s => s.ServiceName == "Grammateket").ServiceID,
-                UserID = users.Single(u => u.UserName == "John").UserID
-                },
+
                 new ServiceAssignment{
                 ServiceID = services.Single(s => s.ServiceName == "IntoWords").ServiceID,
                 UserID = users.Single(u => u.UserName == "Jim").UserID

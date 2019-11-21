@@ -28,7 +28,8 @@ namespace TryWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //tilføjet addJsonOoption for at ignorere self referencing loop. Dog opstår der fejl da den laver det hele. Anden halvdel af løsningen findes i Service.cs
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //UseInMemory bruges kun, hvis man hurtigt vil teste api, ellers bruges SQLServerblabla
             //services.AddDbContext<TryWebApiContext>(option => option.UseInMemoryDatabase("ApiDB"));
