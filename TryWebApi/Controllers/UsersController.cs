@@ -81,11 +81,16 @@ namespace TryWebApi.Controllers
         //virker i Postman
         // GET: api/Users/5
         [HttpGet("{id}", Name = "Get")]
-        public User Get(int id)
-        { 
-            User userToGet = _context.Users.Find(id);
+        public List<User> Get(int id)
+        {
+            List<User> userToGet = _context.Users
+                .Where(u => u.UserID == id)
+                .Include(sa => sa.ServiceAssignment)
+                .ThenInclude(s => s.Service)
+                .ToList();
+                                                                       
 
-            if(userToGet == null)
+            if(userToGet[0] == null)
             {
                 NotFound();
             }
