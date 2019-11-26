@@ -43,38 +43,40 @@ namespace TryWebApi.Controllers
 
             //var users = _context.Users;
 
-            //foreach(User u in users)
-            //{
-            //    List<Service> services = new List<Service>();
-            //     UserIndexData userinformation = new UserIndexData();
-            //    userinformation.User = u;
-            //    _context.ServiceAssignments.Where(sa => sa.UserID == u.UserID).Load();
-            //    foreach (ServiceAssignment sa in u.ServiceAssignment)
-            //    {
-            //        services.Add(_context.GetServices.SingleOrDefault(s => s.ServiceID == sa.ServiceID));
-            //    }
-            //    userinformation.Services = services;
-            //    listWithUserData.Add(userinformation);
-            //    //services.Clear();
-            //}
-
+            //----------------------------------------Bliver ikke slettet!----------------------------------------//
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //foreach(User u in users)                                                                            //
+            //{                                                                                                   //
+            //    List<Service> services = new List<Service>();                                                   //
+            //     UserIndexData userinformation = new UserIndexData();                                           //
+            //    userinformation.User = u;                                                                       //
+            //    _context.ServiceAssignments.Where(sa => sa.UserID == u.UserID).Load();                          //
+            //    foreach (ServiceAssignment sa in u.ServiceAssignment)                                           //
+            //    {                                                                                               //
+            //        services.Add(_context.GetServices.SingleOrDefault(s => s.ServiceID == sa.ServiceID));       //
+            //    }                                                                                               //
+            //    userinformation.Services = services;                                                            //
+            //    listWithUserData.Add(userinformation);                                                          //
+            //    //services.Clear();                                                                             //
+            //}                                                                                                   //
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             return users;
         }
 
-        private Service FindService(List<Service> services, int serviceID)
-        {
-            Service serviceToFind = new Service();
+        //private Service FindService(List<Service> services, int serviceID)
+        //{
+        //    Service serviceToFind = new Service();
 
-            foreach (Service service in services)
-            {
-                if(service.ServiceID == serviceID)
-                {
-                    serviceToFind = service;
-                }
-            }
-            return serviceToFind;
-        }
+        //    foreach (Service service in services)
+        //    {
+        //        if(service.ServiceID == serviceID)
+        //        {
+        //            serviceToFind = service;
+        //        }
+        //    }
+        //    return serviceToFind;
+        //}
 
         //virker i Postman
         // GET: api/Users/5
