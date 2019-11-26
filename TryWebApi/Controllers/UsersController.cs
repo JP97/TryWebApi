@@ -125,7 +125,10 @@ namespace TryWebApi.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            List<User> userToDelete = _context.Users.Where(u => u.UserID == id).Include(sa => sa.ServiceAssignment).ThenInclude(s => s.Service).ToList();
+            List<User> userToDelete = _context.Users
+                .Where(u => u.UserID == id)
+                .Include(sa => sa.ServiceAssignment)
+                .ThenInclude(s => s.Service).ToList();
 
 
  
