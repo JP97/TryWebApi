@@ -72,10 +72,15 @@ namespace TryWebApi.Controllers
             return NoContent();
         }
 
+        //der skal ikke være service id med, da vi har identity på vores database
         // POST: api/Services
         [HttpPost]
         public async Task<ActionResult<Service>> PostService(Service service)
         {
+            if(service.ServiceID > 0)
+            {
+                service.ServiceID = 0;
+            }
             _context.GetServices.Add(service);
             await _context.SaveChangesAsync();
 
