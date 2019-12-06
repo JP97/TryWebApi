@@ -32,13 +32,22 @@ namespace TryWebApi.Controllers
         //Virker i Postman
         // GET: api/Users
         [HttpGet]
-        public List<User> Get()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             //https://docs.microsoft.com/de-de/aspnet/core/data/ef-mvc/read-related-data?view=aspnetcore-2.2#about-explicit-loading
             //put virker kun hvis du har asnotracking med i det lort
-            List<User> users = _context.Users.Include(i => i.ServiceAssignment)
-                                                .ThenInclude(sa => sa.Service)
-                                                .ToList();
+
+            return await _context.Users.Include(i => i.ServiceAssignment)
+                             .ThenInclude(sa => sa.Service)
+                             .ToListAsync();
+
+
+            //List<User> users = _context.Users.Include(i => i.ServiceAssignment)
+            //                                    .ThenInclude(sa => sa.Service)
+            //                                    .ToList();
+
+
+
             //List<UserIndexData> listWithUserData = new List<UserIndexData>();
 
             //var users = _context.Users;
@@ -61,7 +70,6 @@ namespace TryWebApi.Controllers
             //}                                                                                                   //
             ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            return users;
         }
 
         //private Service FindService(List<Service> services, int serviceID)
