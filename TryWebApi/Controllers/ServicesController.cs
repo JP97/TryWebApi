@@ -20,7 +20,7 @@ namespace TryWebApi.Controllers
         {
             _context = context;
         }
-
+        // virker
         // GET: api/Services
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Service>>> GetGetServices()
