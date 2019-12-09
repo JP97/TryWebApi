@@ -109,10 +109,18 @@ namespace TryWebApi.Controllers
         //virker i postman its alive/working
         // POST: api/Users
         [HttpPost]
-        public void Post(User newUser)
+        public async Task<ActionResult<User>> Post(User newUser)
         {
-            _context.AddAsync(newUser);
-            _context.SaveChangesAsync();
+            //_context.AddAsync(newUser);
+            //_context.SaveChangesAsync();
+            //if (newUser.UserID > 0)
+            //{
+            //    newUser.UserID = 0;
+            //}
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("Users", new { id = newUser.UserID }, newUser);
         }
 
         // PUT: api/Users/5
@@ -131,7 +139,7 @@ namespace TryWebApi.Controllers
         //virker i Postman, der stod i hvertfald 200 OK
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<List<User>>> Delete(int id)
         {
            List<User> userToDelete = _context.Users
                 .Where(u => u.UserID == id)
@@ -146,7 +154,9 @@ namespace TryWebApi.Controllers
 
             _context.Users.Remove(userToDelete[0]);
 
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+
+            return userToDelete;
         }
     }
 }

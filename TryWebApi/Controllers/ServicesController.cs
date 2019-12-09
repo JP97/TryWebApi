@@ -75,16 +75,16 @@ namespace TryWebApi.Controllers
         //der skal ikke være service id med, da vi har identity på vores database
         // POST: api/Services
         [HttpPost]
-        public async Task<ActionResult<Service>> PostService(Service service)
+        public async Task<ActionResult<int>> PostService(Service service)
         {
-            if(service.ServiceID > 0)
-            {
-                service.ServiceID = 0;
-            }
+            //if(service.ServiceID > 0)
+            //{
+            //    service.ServiceID = 0;
+            //}
             _context.GetServices.Add(service);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetService", new { id = service.ServiceID }, service);
+            return service.ServiceID;
         }
 
         // DELETE: api/Services/5
