@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -75,16 +76,12 @@ namespace TryWebApi.Controllers
         //der skal ikke være service id med, da vi har identity på vores database
         // POST: api/Services
         [HttpPost]
-        public async Task<ActionResult<int>> PostService(Service service)
+        public async Task<ActionResult<Service>> PostService(Service service)
         {
-            //if(service.ServiceID > 0)
-            //{
-            //    service.ServiceID = 0;
-            //}
             _context.GetServices.Add(service);
             await _context.SaveChangesAsync();
 
-            return service.ServiceID;
+            return service;
         }
 
         // DELETE: api/Services/5
