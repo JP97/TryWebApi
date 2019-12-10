@@ -111,16 +111,10 @@ namespace TryWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Post(User newUser)
         {
-            //_context.AddAsync(newUser);
-            //_context.SaveChangesAsync();
-            //if (newUser.UserID > 0)
-            //{
-            //    newUser.UserID = 0;
-            //}
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("Users", new { id = newUser.UserID }, newUser);
+            return newUser;
         }
 
         // PUT: api/Users/5
